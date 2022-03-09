@@ -7,8 +7,15 @@ import { Container, Cart } from './styles';
 import { useCart } from '../../hooks/useCart';
 
 const Header = (): JSX.Element => {
+  // TODO: 
+  // Você deve receber o array cart
+  // do hook useCart e mostrar em tela
+  // a quantidade de produtos distintos adicionados ao carrinho.
+  // Dessa forma, se o carrinho possui 4 unidades do
+  // item A e 1 unidade do item B o valor a ser mostrado é 2 itens.
+
   // const { cart } = useCart();
-  // const cartSize = // TODO;
+  // const cartSize = 
 
   return (
     <Container>
@@ -28,5 +35,4 @@ const Header = (): JSX.Element => {
     </Container>
   );
 };
-
 export default Header;

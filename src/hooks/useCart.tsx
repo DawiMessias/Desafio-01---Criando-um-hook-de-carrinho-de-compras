@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { api } from '../services/api';
 import { Product, Stock } from '../types';
@@ -23,18 +23,31 @@ const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps): JSX.Element {
   const [cart, setCart] = useState<Product[]>(() => {
-    // const storagedCart = Buscar dados do localStorage
 
-    // if (storagedCart) {
-    //   return JSON.parse(storagedCart);
-    // }
+    const storagedCart = localStorage.getItem("@RocketShoes:cart")
+    
+    if (storagedCart) {
+      return JSON.parse(storagedCart);
+    }
+    console.log(storagedCart)
 
     return [];
   });
 
   const addProduct = async (productId: number) => {
     try {
-      // TODO
+      // TODO: Copiar as informações pelo ID ?
+      // TODO: Fazer um get(Axios) products/productId para obter as infos via Id do Produto
+
+  
+      // const newProduct:Product = {
+      //   id: productId,
+      //   amount,
+      //   image,
+      //   price,
+      //   title
+      // }
+      //setCart()
     } catch {
       // TODO
     }
@@ -42,7 +55,9 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
   const removeProduct = (productId: number) => {
     try {
-      // TODO
+      const newCarts = [...cart]
+      const removeProductFromId =  newCarts.filter(cart => cart.id !== productId)
+      setCart(removeProductFromId)
     } catch {
       // TODO
     }
@@ -53,7 +68,10 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     amount,
   }: UpdateProductAmount) => {
     try {
-      // TODO
+      // TODO: Incrementar pelo ProductId e somar o valor
+
+      // const newCart = [...cart, productId, amount] 
+      // setCart(newCart)
     } catch {
       // TODO
     }
