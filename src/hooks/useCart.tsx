@@ -29,27 +29,42 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     if (storagedCart) {
       return JSON.parse(storagedCart);
     }
-    console.log(storagedCart)
+    console.log("Storeged", storagedCart)
 
     return [];
   });
 
   const addProduct = async (productId: number) => {
     try {
-      // TODO: Copiar as informações pelo ID ?
-      // TODO: Fazer um get(Axios) products/productId para obter as infos via Id do Produto
+      const updatedCart = [...cart]
+      const productExists = updatedCart.find(product => product.id === productId)
 
-  
-      // const newProduct:Product = {
-      //   id: productId,
-      //   amount,
-      //   image,
-      //   price,
-      //   title
-      // }
-      //setCart()
+      const stock = await api.get(`/stock/${productId}`);
+
+      const stockAmount = stock.data.amount;
+      const currentAmount = productExists ? productExists.amount : 0;
+
+      const amount = currentAmount + 1;
+
+      if (amount > stockAmount) {
+        toast.error("Quantidade solicitada fora do stock")
+        return;
+      }
+      
+      if(productExists) {
+        productExists.amount = amount;
+      } else {
+        const product = await api.get(`/products/${productId}`)
+        const newProduct = {
+          ...product.data,
+          amount: 1
+        }
+        updatedCart.push(newProduct)
+      }
+      setCart(updatedCart)
+      localStorage.setItem('@RocketShoes:cart', JSON.stringify(updatedCart))
     } catch {
-      // TODO
+      toast.error("Erro na adição do produto");
     }
   };
 
@@ -70,7 +85,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     try {
       // TODO: Incrementar pelo ProductId e somar o valor
 
-      // const newCart = [...cart, productId, amount] 
+      const newCart = [...cart, productId, amount] 
       // setCart(newCart)
     } catch {
       // TODO
