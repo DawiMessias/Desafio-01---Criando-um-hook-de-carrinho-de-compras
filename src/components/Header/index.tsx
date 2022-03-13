@@ -14,8 +14,8 @@ const Header = (): JSX.Element => {
   // Dessa forma, se o carrinho possui 4 unidades do
   // item A e 1 unidade do item B o valor a ser mostrado é 2 itens.
 
-  // const { cart } = useCart();
-  // const cartSize = 
+  const { cart } = useCart();
+  const cartSize = cart.length
 
   return (
     <Container>
@@ -27,7 +27,7 @@ const Header = (): JSX.Element => {
         <div>
           <strong>Meu carrinho</strong>
           <span data-testid="cart-size">
-            {/* {cartSize === 1 ? `${cartSize} item` : `${cartSize} itens`} */}
+            {cartSize === 1 ? `${cartSize} item` : `${cartSize} itens`}
           </span>
         </div>
         <MdShoppingBasket size={36} color="#FFF" />
