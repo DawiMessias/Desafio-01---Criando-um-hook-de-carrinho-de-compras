@@ -234,7 +234,7 @@ describe('useCart Hook', () => {
         );
       },
       {
-        timeout: 200,
+        timeout: 5000,
       }
     );
 
